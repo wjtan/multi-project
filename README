@@ -1,4 +1,94 @@
-This is your new Play application
-=====================================
+-= Whole project =-
 
-This file will be packaged with your application, when using `play dist`.
+Run whole project
+- play run
+
+There are 3 submodules
+- Common
+- Static UI
+- Dynamic UI
+
+The pages are avaliable at:
+localhost:9000/rest/message -> getting a message from REST API
+localhost:9000/static/ -> Static UI
+localhost:9000/dyn/ -> Dynamic UI
+
+Static UI get the message from the Java API.
+Dynamic UI get the message from the REST API.
+
+===============================================================================
+-= Static UI =-
+
+Run ui-static only
+- cd modules/ui-static
+- play run
+
+Pages avaliable:
+localhost:9000/static/
+
+===============================================================================
+-= Dynamic UI =-
+
+Run ui-dynamic only
+- cd modules/ui-dynamic
+- play run
+
+Pages avaliable:
+localhost:9000/rest/message
+localhost:9000/dyn/
+
+===============================================================================
+-= Summary of Project Layout =-
+
+app
+conf
+ └ application.conf
+ └ routes                → Routes definition (redirect to rest.routes, uidyn.routes and uistatic.routes)
+modules
+ └ common                → Common submodule for Service Facade/Rest API
+    └ app
+    └ conf
+        └ rest.routes    → routing for rest api
+
+ └ static ui             → Submodule for static game ui
+    └ app
+    
+    └ conf
+        └ application.conf     → Used run submodule only
+        └ routes               → routing used by submodule only (redirect to uistatic.routes)
+        └ uistatic.routes      → routing for static ui
+
+    └ lib2               → Unmanaged libraries required by submodule (will not be used by parent)
+        └ common.jar     → Compiled of Common submodule
+
+    └ project
+        └ build.properties
+        └ plugins.sbt
+        └ Build.scala    → Build script for submodule, not used in parent Build.scala
+
+    └ public             → Public assets for Static UI
+
+ └ dynamic ui
+    └ app
+    
+    └ conf
+        └ application.conf
+        └ routes               → routing used by submodule only (redirect to uidyn.routes and rest.routes)
+        └ uidyn.routes
+    
+    └ lib2
+        └ common.jar
+    
+    └ project
+    
+    └ public             → Public assets for Dynamic UI
+
+public
+ └ stylesheets
+ └ javascripts
+ └ images
+project
+ └ build.properties
+ └ plugins.sbt
+ └ Build.scala           → Application build script
+lib                      → Unmanaged libraries dependencies
